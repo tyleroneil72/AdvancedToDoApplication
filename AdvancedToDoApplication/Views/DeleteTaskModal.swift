@@ -13,7 +13,7 @@ struct DeleteTaskModal: View {
     var task: Task
 
     var body: some View {
-        VStack {
+        VStack(spacing: 16) {
             Text("Are you sure you want to delete this task?")
                 .font(.headline)
                 .multilineTextAlignment(.center)
@@ -22,13 +22,10 @@ struct DeleteTaskModal: View {
             Text(task.title)
                 .font(.title3)
                 .foregroundColor(.red)
-                .padding()
 
             HStack {
-                Button("Cancel") {
-                    dismiss()
-                }
-                .buttonStyle(.bordered)
+                Button("Cancel") { dismiss() }
+                    .buttonStyle(.bordered)
 
                 Button("Delete") {
                     modelContext.delete(task)
@@ -37,7 +34,6 @@ struct DeleteTaskModal: View {
                 .buttonStyle(.borderedProminent)
                 .tint(.red)
             }
-            .padding()
         }
         .padding()
     }
@@ -46,4 +42,3 @@ struct DeleteTaskModal: View {
 #Preview {
     DeleteTaskModal(task: Task(title: "Sample Task", dueDate: Date(), category: "Work"))
 }
-
