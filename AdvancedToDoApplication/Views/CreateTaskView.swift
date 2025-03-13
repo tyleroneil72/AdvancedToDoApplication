@@ -15,35 +15,38 @@ struct CreateTaskView: View {
     @State private var title = ""
     @State private var dueDate = Date()
     @State private var selectedCategory = "General"
-    
+
     var existingCategories: [String]
 
     var body: some View {
-        NavigationView {
+        NavigationStack {
             Form {
-                TextField("Task Title", text: $title)
-                DatePicker("Due Date", selection: $dueDate, displayedComponents: .date)
-
-                Picker("Category", selection: $selectedCategory) {
-                    Text("General").tag("General")
-                    ForEach(existingCategories, id: \.self) { category in
-                        Text(category).tag(category)
+                Section {
+                    TextField("Task Title", text: $title)
+                    DatePicker("Due Date", selection: $dueDate, displayedComponents: .date)
+                    
+                    Picker("Category", selection: $selectedCategory) {
+                        Text("General").tag("General")
+                        ForEach(existingCategories, id: \.self) { category in
+                            Text(category).tag(category)
+                        }
                     }
                 }
 
-                Button("Add Task") {
-                    let newTask = Task(title: title, dueDate: dueDate, category: selectedCategory)
-                    modelContext.insert(newTask)
-                    dismiss()
+                Section {
+                    Button("Add Task") {
+                        let newTask = Task(title: title, dueDate: dueDate, category: selectedCategory)
+                        modelContext.insert(newTask)
+                        dismiss()
+                    }
+                    .buttonStyle(.borderedProminent)
+                    .disabled(title.isEmpty)
                 }
-                .disabled(title.isEmpty)
             }
             .navigationTitle("New Task")
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
-                    Button("Cancel") {
-                        dismiss()
-                    }
+                    Button("Cancel") { dismiss() }
                 }
             }
         }

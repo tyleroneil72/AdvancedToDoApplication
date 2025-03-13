@@ -23,22 +23,40 @@ struct UpdateTaskView: View {
     }
 
     var body: some View {
-        Form {
-            TextField("Task Title", text: $title)
-            DatePicker("Due Date", selection: $dueDate, displayedComponents: .date)
-            TextField("Category", text: $category)
+        NavigationStack {
+            Form {
+                Section {
+                    TextField("Task Title", text: $title)
+                    DatePicker("Due Date", selection: $dueDate, displayedComponents: .date)
+                    TextField("Category", text: $category)
+                }
 
-            Button("Update Task") {
-                task.title = title
-                task.dueDate = dueDate
-                task.category = category
-                dismiss()
+                Section {
+                    Button("Update Task") {
+                        updateTask()
+                        dismiss()
+                    }
+                    .buttonStyle(.borderedProminent)
+                    .disabled(title.isEmpty)
+                }
+
+            }
+            .navigationTitle("Edit Task")
+            .toolbar {
+                ToolbarItem(placement: .navigationBarTrailing) {
+                    Button("Cancel") { dismiss() }
+                }
             }
         }
-        .navigationTitle("Edit Task")
+    }
+
+    private func updateTask() {
+        task.title = title
+        task.dueDate = dueDate
+        task.category = category
     }
 }
 
 #Preview {
-    UpdateTaskView(task: Task(title: "Sample", dueDate: Date(), category: "Personal"))
+    UpdateTaskView(task: Task(title: "Sample Task", dueDate: Date(), category: "Personal"))
 }

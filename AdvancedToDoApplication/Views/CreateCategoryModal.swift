@@ -15,7 +15,7 @@ struct CreateCategoryModal: View {
     @State private var categoryName = ""
 
     var body: some View {
-        VStack {
+        VStack(spacing: 16) {
             TextField("Category Name", text: $categoryName)
                 .textFieldStyle(.roundedBorder)
                 .padding()
@@ -25,6 +25,7 @@ struct CreateCategoryModal: View {
                 modelContext.insert(newCategory)
                 dismiss()
             }
+            .buttonStyle(.borderedProminent)
             .disabled(categoryName.isEmpty)
         }
         .padding()
