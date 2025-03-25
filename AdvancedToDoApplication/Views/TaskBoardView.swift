@@ -42,8 +42,13 @@ struct TaskBoardView: View {
                     }
                 }
                 ToolbarItem(placement: .navigationBarLeading) {
-                    Button { isAddingCategory.toggle() } label: {
-                        Label("Add Category", systemImage: "folder.badge.plus")
+                    Menu {
+                        Button("Add Category") { isAddingCategory.toggle() }
+                        NavigationLink("Manage Categories") {
+                            CategoryBoardView()
+                        }
+                    } label: {
+                        Label("Categories", systemImage: "folder")
                     }
                 }
             }
